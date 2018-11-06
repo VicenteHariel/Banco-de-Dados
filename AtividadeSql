@@ -1,0 +1,13 @@
+delete from item_venda 
+where id_estoque in (
+select id_estoque 
+from produto_estoque 
+left join produto on produto_estoque.id_produto = produto.id_produto
+where produto.id_fornecedor >= 5 and produto.id_fornecedor <=10 'or produto.id_produto = 2 or produto.id_produto=3)'
+
+
+delete from produto_estoque where id_produto in (select id_produto from produto where id_fornecedor >= 5 and id_fornecedor <=10 'or id_produto = 2 or id_produto=3)'
+
+delete from produto where 'id_produto=2 or id_produto=3'
+
+select * from produto
