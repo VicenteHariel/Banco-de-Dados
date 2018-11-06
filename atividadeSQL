@@ -1,0 +1,250 @@
+﻿
+/* **************** */
+
+CREATE DATABASE LOJA;
+
+
+
+/* ***************************** */
+CREATE TABLE pessoa (
+		id_pessoa integer NOT NULL,
+		nome varchar(100) NOT NULL,
+		endereco varchar(150) NOT NULL,
+		Primary Key (id_pessoa)			
+		
+);
+
+CREATE TABLE cliente (
+		id_cliente integer NOT NULL,
+		cpf varchar(11) NOT NULL,
+		data_nasc timestamp NOT NULL,
+		nome varchar(100) NOT NULL,
+		Foreign key (id_cliente) references pessoa(id_pessoa),
+		Primary key(id_cliente)
+);
+
+CREATE TABLE fornecedor (
+		id_fornecedor integer NOT NULL,
+		cnpj varchar(14) NOT NULL,
+		foreign key (id_fornecedor) references pessoa(id_pessoa),
+		Primary key(id_fornecedor)
+);
+
+
+
+CREATE TABLE produto(
+	id_produto integer NOT NULL,
+	descricao varchar NOT NULL,
+	preco double precision NOT NULL,
+	id_fornecedor int NOT NULL,
+	Primary Key(id_produto),
+	foreign key (id_fornecedor) references fornecedor(id_fornecedor)	
+);
+
+create table  produto_estoque (
+		id_produto integer NOT NULL,
+		id_estoque integer NOT NULL,		
+		Primary Key(id_estoque),
+		Foreign Key (id_produto) references produto(id_produto)
+);
+
+
+create table venda(
+		id_venda integer NOT NULL,
+		data date NOT NULL,
+		id_cliente integer NOT NULL,
+		Primary Key (id_venda),
+		Foreign key (id_cliente) references cliente(id_cliente)
+);
+
+create table item_venda (
+		id_venda integer NOT NULL,
+		id_estoque integer NOT NULL,
+		Primary Key (id_venda, id_estoque),
+		Foreign KEY (id_venda) references venda(id_venda),
+                FOREIGN KEY (id_estoque) references produto_estoque(id_estoque)
+        );
+	
+    /* **************** */
+  
+  INSERT INTO pessoa VALUES 
+                (1,'Luiz Fernando','Rua das Flores'),
+                (2,'Bruce Wayne','Mansão Wayne'),
+                (3,'Darth Vader','Força Negra'),
+                (4,'Yoda','não tem'),
+                (5,'Obi wan Kenobi','Terra Venus'),
+                (6,'Barry Allen','Central City'),
+                (7,'Felicity Smoal','Star City'),
+                (8,'Solomon Grundy','Cyrus Gold'),
+                (9,'Clark Kent','Metropolis'),
+                (10,'Ted Mosby','New York');  
+  
+  INSERT INTO cliente VALUES 
+                (1, '66666666666', '25/03/1989', 'Luiz Fernando'),
+                (3, '99999999999', '12/05/1910', 'Darth Vader'),
+                (6, '88888888888', '12/05/1990', 'Barry Allen'),
+                (7, '88888888888', '12/10/1990', 'Felicity Smoal'),
+                (9, '33333333333', '05/05/1950', 'Clark Kent');
+  
+  INSERT INTO fornecedor VALUES 
+                (2, '66666666666'),
+                (4, '99999999999'),
+                (5, '88888888888'),
+                (8, '88888888888'),
+                (10, '33333333333');
+  
+  INSERT INTO produto VALUES 
+                (1, 'ESPADA', 39.60, 2),
+                (2, 'Falconete', 12.60, 4),
+                (3, 'TANQEE', 5000.03, 5),
+                (4, 'KATANA', 12.56, 8),
+                (5, 'Alabarda', 200.30, 10),
+                (6, 'Cotó', 156.98, 2),
+                (7, 'Mangual', 58.90, 4),
+                (8, 'Hauberk', 88.65, 2),
+                (9, 'Estrela da Manhã', 66.58, 10);
+  
+ INSERT INTO venda VALUES 
+                (1, '15/05/2015',1),
+                (2, '15/05/2015',3),
+                (3, '15/05/2015',6),
+                (4, '15/05/2015',7),
+                (5, '15/05/2015',9),
+                (6, '16/05/2015',1),
+                (7, '17/05/2015',3),
+                (8, '18/05/2015',6),
+                (9, '19/05/2015',7),
+                (10, '20/05/2015',9),
+                (11, '18/05/2015',1),
+                (12, '19/05/2015',3),
+                (13, '15/06/2015',6),
+                (14, '17/05/2015',7),
+                (15, '18/05/2017',9),
+                (16, '15/05/2017',1),
+                (17, '15/05/2017',3),
+                (18, '15/05/2017',6),
+                (19, '15/05/2017',7),
+                (20, '15/05/2017',9),
+                (21, '16/05/2017',1),
+                (22, '17/05/2017',3),
+                (23, '18/05/2017',6),
+                (24, '19/05/2017',7),
+                (25, '20/05/2017',9),
+                (26, '18/05/2017',1),
+                (27, '19/05/2017',3),
+                (28, '15/06/2017',6),
+                (29, '17/05/2017',7),
+                (30, '18/05/2017',9); 
+
+ INSERT INTO produto_estoque VALUES 
+                (1,1),
+                (2,2),
+                (3,3),
+                (4,4),
+                (5,5),
+                (6,6),
+                (7,7),
+                (8,8),
+                (9,9),
+                (1,10),
+                (2,11),
+                (3,12),
+                (4,13),
+                (5,14),
+                (6,15),
+                (7,16),
+                (8,17),
+                (9,18),
+                (1,19),
+                (2,20),
+                (3,21),
+                (4,22),
+                (5,23),
+                (6,24),
+                (7,25),
+                (8,26),
+                (9,27),
+                (1,28),
+                (2,29),
+                (3,30),
+                (4,31),
+                (5,32),
+                (6,33),
+                (7,34),
+                (8,35);
+   
+  
+  INSERT INTO item_venda VALUES 
+                (1,1),
+                (2,2),
+                (3,3),
+                (4,4),
+                (5,5),
+                (6,6),
+                (7,7),
+                (8,8),
+                (9,9),
+                (1,10),
+                (11,11),
+                (11,12),
+                (12,13),
+                (13,14);
+
+
+ /* atualizações */
+select * from produto_estoque
+ 
+UPDATE cliente SET nome = 'João Paulo da Silva Santos' , cpf='95980001856' WHERE id_cliente = 1; 
+UPDATE cliente SET data_nasc = '30/12/1998' WHERE data_nasc = '12/05/1910'; 
+/*
+id_cli   nome
+6 	Barry Allen
+7 	Felicity Smoal
+9 	Clark Kent
+1 	João Paulo da Silva Santos
+3 	Darth Vader
+*/
+UPDATE venda SET id_cliente = 6 WHERE id_cliente = 3;
+UPDATE venda SET id_cliente = 9 WHERE id_cliente = 6;
+UPDATE venda SET id_cliente = 3 WHERE id_cliente = 9;
+
+
+UPDATE produto SET preco = (preco + ((20*preco)/100)) WHERE id_produto = 1;
+UPDATE produto SET preco = (preco - ((30*preco)/100)) WHERE id_produto = 3;
+UPDATE produto SET preco = (preco - ((50*preco)/100)) WHERE id_fornecedor = 8;
+UPDATE produto SET preco = (preco + ((50*preco)/100)) WHERE id_fornecedor = 4;
+
+/* Exclusões */
+-- eu consigo deletar as pessoas inserindo no create table 'delete on cascade' nas referencias das tabelas filhas. 
+
+select * from item_venda
+--id_venda, id_estoque
+
+select * from produto_estoque
+--id_estoque, id_produto
+
+select * from produto
+--id_produto, id_fornecedor   
+
+/*
+Tabela Produto
+1. ID:1 IDFORNECEDOR:2
+2. ID:2 IDFORNECEDOR:4
+3. ID:3 IDFORNECEDOR:5
+4. ID:4 IDFORNECEDOR:8
+5. ID:5 IDFORNECEDOR:8
+*/
+DELETE FROM item_venda WHERE id_estoque in (select id_estoque FROM produto_estoque WHERE id_produto >= 1 AND id_produto <= 5);
+DELETE FROM produto_estoque WHERE id_produto >= 1 AND id_produto <= 5; 
+DELETE FROM produto WHERE id_produto >= 1 AND id_produto <= 5;
+
+Tabela Fornecedor
+ ID:2 CNPJ:66666666666
+ ID:4 CNPJ:99999999999
+ ID: 5 CNPJ:8888888888
+ ID: 8 CNPJ:8888888888
+ ID: 10 CNPJ:33333333333
+DELETE FROM item_venda WHERE id_estoque in (SELECT id_estoque FROM produto_estoque LEFT JOIN produto on produto_estoque.id_produto = produto.id_produto WHERE produto.id_fornecedor =2);
+DELETE FROM produto_estoque WHERE id_produto in (select id_produto from produto where id_fornecedor = 2);
+DELETE FROM produto WHERE id_fornecedor = 2;
+DELETE FROM fornecedor WHERE id_fornecedor = 2;
